@@ -96,7 +96,7 @@ export class PlaydeckCommandsV3 extends PlaydeckCommands {
 				label: `${arg}:`,
 				required: true,
 				regex: regex,
-				useVariables: { local: true },
+				useVariables: true,
 				tooltip: tooltip,
 			}
 		}

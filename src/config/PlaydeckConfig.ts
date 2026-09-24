@@ -1,8 +1,8 @@
-import { SomeCompanionConfigField, Regex, CompanionOptionValues } from '@companion-module/base'
+import { SomeCompanionConfigField, Regex, JsonValue } from '@companion-module/base'
 import { PlaydeckVersion, Version } from '../core/version/PlaydeckVersion.js'
 import { PlaydeckLogo } from './PlaydeckLogo.js'
-export interface PlaydeckConfig extends CompanionOptionValues {
-	version: Version
+export type PlaydeckConfig = Record<string, JsonValue> & {
+	version: string
 	host: string
 	isAdvanced: boolean
 	wsPort: number
@@ -38,7 +38,6 @@ export function getPlaydeckConfigFields(): SomeCompanionConfigField[] {
 			id: 'host',
 			width: 6,
 			default: '127.0.0.1',
-			required: true,
 			regex: Regex.HOSTNAME,
 		},
 		{
@@ -55,10 +54,13 @@ export function getPlaydeckConfigFields(): SomeCompanionConfigField[] {
 			width: 9,
 			value:
 				'For more detailed settings, use the "Advanced" switch. This is manual mode! Make changes only if you are sure that they are necessary. These settings will override the default settings for the version you selected (if a particular connection type is not supported in the selected version, it will be ignored).',
-			isVisible: (configOptions) => {
+			isVisibleExpression: `$(options:isAdvanced)===false`,
+			/**
+			 *  (configOptions) => {
 				const config = configOptions as PlaydeckConfig
 				return config.isAdvanced === false
-			},
+				},
+			 */
 		},
 		{
 			type: 'static-text',
@@ -96,7 +98,6 @@ export function getPlaydeckConfigFields(): SomeCompanionConfigField[] {
 			id: 'wsPort',
 			width: 6,
 			default: 11411,
-			required: false,
 			min: 0,
 			max: 65535,
 			isVisible: (configOptions, data: { notSupported: Version[] }) => {
@@ -137,7 +138,6 @@ export function getPlaydeckConfigFields(): SomeCompanionConfigField[] {
 			id: 'tcpPortCommands',
 			width: 6,
 			default: 11375,
-			required: false,
 			min: 0,
 			max: 65535,
 			isVisible: (configOptions) => {
@@ -182,7 +182,6 @@ export function getPlaydeckConfigFields(): SomeCompanionConfigField[] {
 			id: 'tcpPortEvents',
 			width: 6,
 			default: 11376,
-			required: false,
 			min: 0,
 			max: 65535,
 			isVisible: (configOptions, data: { notSupported: Version[] }) => {

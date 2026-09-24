@@ -1,5 +1,3 @@
-import { InputValue } from '@companion-module/base/dist'
-
 /** rounded down `number` */
 export type integer = number
 /** floaty number */
@@ -83,3 +81,5 @@ export enum Tally {
 	Preview = 1,
 	Program = 2,
 }
+
+type InputValue = string | number

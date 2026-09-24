@@ -1,4 +1,4 @@
-import { combineRgb, CompanionFeedbackDefinitions, CompanionOptionValues, InputValue } from '@companion-module/base'
+import { combineRgb, CompanionFeedbackDefinitions, CompanionOptionValues } from '@companion-module/base'
 import { PlaydeckState } from '../../../PlaydeckState.js'
 
 import { PlaydeckValuesV41b16 } from '../../../../data/PlaydeckStatusManager/Versions/V4/v41b16/PlaydeckStatusV41b16.js'
@@ -48,19 +48,19 @@ export const PlaydeckFeedbacksDefinitionsV41b16 = (state: PlaydeckStateV41b16): 
 						min: 1,
 						max: 15,
 						default: 1,
-						isVisible: (opt) => opt.isNumberString === false,
+						isVisibleExpression: `$(options:isNumberString) === false`,
 					},
 					{
 						type: 'textinput',
 						label: `Object Number`,
 						id: `objectNumberString`,
 						default: `1`,
-						useVariables: { local: true },
-						isVisible: (opt) => opt.isNumberString === true,
+						useVariables: true,
+						isVisibleExpression: `$(options:isNumberString) === true`,
 					},
 				],
 
-				callback: async (feedback, context): Promise<boolean> => {
+				callback: async (feedback): Promise<boolean> => {
 					const options = feedback.options as CheckObjectsStateOptionValues
 
 					if (!state) return false
@@ -72,7 +72,7 @@ export const PlaydeckFeedbacksDefinitionsV41b16 = (state: PlaydeckStateV41b16): 
 
 					let objectNum = options.objectNumber
 					if (options.isNumberString) {
-						objectNum = Number(await context.parseVariablesInString(options.objectNumberString.toString()))
+						objectNum = Number(options.objectNumberString.toString())
 					}
 					const objectStates = states[options.stateableObject]
 					if (!Array.isArray(objectStates)) return false
@@ -87,7 +87,7 @@ export interface CheckObjectsStateOptionValues extends CompanionOptionValues {
 	stateableObject: Lowercase<StateableTargets>
 	isNumberString: boolean
 	objectNumber: number
-	objectNumberString: InputValue
+	objectNumberString: string | number
 }
 export interface PlaydeckStateV41b16 extends Omit<PlaydeckState, 'status'> {
 	status: Omit<PlaydeckState['status'], 'getValues'> & {

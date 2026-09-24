@@ -104,16 +104,12 @@ export class PlaydeckTCPConnection extends PlaydeckConnection {
 	send(command: string): void {
 		if (!this.#tcpHelper) return
 		this.log('debug', `Message sent: ${command}`)
-		this.#tcpHelper
-			.send(command)
-			.then((result) => {
-				if (result) {
-					this.log(`info`, `Command successfully sent ${command}`)
-				}
-			})
-			.catch((e) => {
-				this.log(`error`, `Error occured: ${e}`)
-			})
+		try {
+			const success: boolean = this.#tcpHelper.send(command)
+			if (success) this.log(`info`, `Command successfully sent ${command}`)
+		} catch (e) {
+			this.log(`error`, `Error occured: ${e}`)
+		}
 	}
 	destroy(): void {
 		if (this.#tcpHelper) {

@@ -1,6 +1,5 @@
 import {
 	InstanceBase,
-	runEntrypoint,
 	InstanceStatus,
 	SomeCompanionConfigField,
 	CompanionVariableDefinition,
@@ -8,14 +7,13 @@ import {
 	LogLevel,
 } from '@companion-module/base'
 import { getPlaydeckConfigFields, PlaydeckConfig } from './config/PlaydeckConfig.js'
-import { UpgradeScripts } from './upgrades/PlaydeckUpgrades.js'
 import { PlaydeckVersion } from './core/version/PlaydeckVersion.js'
 import { PlaydeckState } from './core/state/PlaydeckState.js'
 import { PlaydeckConnectionManager } from './core/connections/PlaydeckConnectionManager.js'
 import { PlaydeckActions } from './core/actions/PlaydeckActions.js'
 import { PlaydeckFeedbacks } from './core/state/Feedbacks/PlaydeckFeedbacks.js'
 import { PlaydeckPresets } from './core/presets/PlaydeckPresets.js'
-export class PlaydeckInstance extends InstanceBase<PlaydeckConfig> {
+export class PlaydeckInstance extends InstanceBase {
 	#config!: PlaydeckConfig
 	/**
 	 * returns readonly copy of config
@@ -94,5 +92,3 @@ export class PlaydeckInstance extends InstanceBase<PlaydeckConfig> {
 		}
 	}
 }
-
-runEntrypoint(PlaydeckInstance, UpgradeScripts)

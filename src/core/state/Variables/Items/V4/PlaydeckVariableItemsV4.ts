@@ -1,6 +1,6 @@
 import { PlaydeckValuesV4 } from '../../../../data/PlaydeckStatusManager/Versions/V4/v40b00/PlaydeckStatusV4.js'
 import { PlaydeckValuesV41b16 } from '../../../../data/PlaydeckStatusManager/Versions/V4/v41b16/PlaydeckStatusV41b16.js'
-import { CompanionVariableDefinition, CompanionVariableValue } from '@companion-module/base/dist'
+import { CompanionVariableValue } from '@companion-module/base'
 import { EventSources, PlaydeckEvent } from '../../../../../core/data/PlaydeckEvents.js'
 import { PlaybackState, PlaydeckUtils } from '../../../../../utils/PlaydeckUtils.js'
 import { PlaydeckVariableItem } from '../PlaydeckVariableItems.js'
@@ -10,10 +10,11 @@ import {
 	PlaydeckDataTypeV4,
 } from '../../../../../core/data/PlaydeckProjectManager/V4/PlaydectDataV4.js'
 import { StateableTargets } from '../../../../../core/data/PlaydeckStatusManager/Versions/V4/v41b16/PlaydeckStatusMessageV41b16.js'
+import { CompanionVariableDefinitionLegacy } from '../../PlaydeckVariables.js'
 
 const variableItemsV40b00: PlaydeckVariableItem[] = [
 	{
-		getVariableDefinition: (): CompanionVariableDefinition => {
+		getVariableDefinition: (): CompanionVariableDefinitionLegacy => {
 			return {
 				variableId: `project_filename`,
 				name: `Current project filename`,
@@ -28,7 +29,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (): CompanionVariableDefinition => {
+		getVariableDefinition: (): CompanionVariableDefinitionLegacy => {
 			return {
 				variableId: `project_name`,
 				name: `Current project name`,
@@ -43,7 +44,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (): CompanionVariableDefinition => {
+		getVariableDefinition: (): CompanionVariableDefinitionLegacy => {
 			return {
 				variableId: `project_clock`,
 				name: `Current project clock`,
@@ -58,7 +59,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (): CompanionVariableDefinition => {
+		getVariableDefinition: (): CompanionVariableDefinitionLegacy => {
 			return {
 				variableId: `project_timestamp`,
 				name: `Current project time with date (YYYY-MM-DD HH:mm:ss)`,
@@ -73,7 +74,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_play_state`,
@@ -104,7 +105,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_canplay_error`,
@@ -128,7 +129,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_tally`,
@@ -148,7 +149,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_state`,
@@ -168,7 +169,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: '4.1b16',
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_name`,
@@ -188,7 +189,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_block_count`,
@@ -208,7 +209,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_block_clip_count`,
@@ -235,7 +236,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 	},
 	////
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_clip_name`,
@@ -255,7 +256,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_clip_id`,
@@ -275,7 +276,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_clip_number`,
@@ -295,7 +296,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_clip_position`,
@@ -315,7 +316,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_clip_duration`,
@@ -335,7 +336,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_clip_time_end`,
@@ -355,7 +356,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_clip_remain`,
@@ -375,7 +376,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_clip_progress`,
@@ -396,7 +397,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 	},
 	///
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_block_name`,
@@ -416,7 +417,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_block_id`,
@@ -436,7 +437,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_block_number`,
@@ -456,7 +457,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_block_position`,
@@ -476,7 +477,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_block_duration`,
@@ -496,7 +497,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_block_time_end`,
@@ -516,7 +517,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_block_remain`,
@@ -536,7 +537,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_block_progress`,
@@ -556,7 +557,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_block_scheduled_method`,
@@ -583,7 +584,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 	},
 	///
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_clip_filetype`,
@@ -609,7 +610,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_clip_type`,
@@ -635,7 +636,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number, block: number = 0): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number, block: number = 0): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_block_${block + 1}_name`,
@@ -665,7 +666,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number, block: number = 0): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number, block: number = 0): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_block_${block + 1}_clipname`,
@@ -702,7 +703,7 @@ const variableItemsV40b00: PlaydeckVariableItem[] = [
 
 const variableItemsV41b16: PlaydeckVariableItem[] = [
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_state`,
@@ -740,7 +741,7 @@ function getOtherStates(): PlaydeckVariableItem[] {
 
 		for (let i = 0; i < capacity; i++) {
 			const varItem: PlaydeckVariableItem = {
-				getVariableDefinition: (): CompanionVariableDefinition | null => {
+				getVariableDefinition: (): CompanionVariableDefinitionLegacy | null => {
 					return {
 						variableId: `${stateableObject}_${i + 1}_state`,
 						name: `Ready state of ${stateableObject.toLowerCase() == StateableTargets.Output.toLowerCase() ? `channel ${stateableObject}` : stateableObject} #${i + 1}`,
@@ -765,7 +766,7 @@ function getOtherStates(): PlaydeckVariableItem[] {
 
 const variableItemsV42b19: PlaydeckVariableItem[] = [
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_selected_id`,
@@ -786,7 +787,7 @@ const variableItemsV42b19: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_selected_clip_name`,
@@ -812,7 +813,7 @@ const variableItemsV42b19: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_selected_clip_number`,
@@ -838,7 +839,7 @@ const variableItemsV42b19: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_selected_clip_canplay`,
@@ -864,7 +865,7 @@ const variableItemsV42b19: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_selected_clip_block`,
@@ -893,7 +894,7 @@ const variableItemsV42b19: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_selected_clip_block_name`,
@@ -922,7 +923,7 @@ const variableItemsV42b19: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_selected_clip_type`,
@@ -948,7 +949,7 @@ const variableItemsV42b19: PlaydeckVariableItem[] = [
 		deprecated: null,
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_selected_clip_filetype`,

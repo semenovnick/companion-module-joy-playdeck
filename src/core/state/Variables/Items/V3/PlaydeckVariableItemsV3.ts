@@ -1,11 +1,12 @@
-import { CompanionVariableDefinition, CompanionVariableValue } from '@companion-module/base/dist'
+import { CompanionVariableValue } from '@companion-module/base'
 import { PlaydeckValuesV3 } from '../../../../data/PlaydeckStatusManager/Versions/V3/PlaydeckStatusV3.js'
 import { EventSources, PlaydeckEvent } from '../../../../data/PlaydeckEvents.js'
 import { PlaybackState, PlaydeckUtils } from '../../../../../utils/PlaydeckUtils.js'
 import { PlaydeckVariableItem } from '../PlaydeckVariableItems.js'
+import { CompanionVariableDefinitionLegacy } from '../../PlaydeckVariables.js'
 export const variableItemsV3: PlaydeckVariableItem[] = [
 	{
-		getVariableDefinition: (): CompanionVariableDefinition => {
+		getVariableDefinition: (): CompanionVariableDefinitionLegacy => {
 			return {
 				variableId: `general_playlist_file`,
 				name: `Current playlist file`,
@@ -20,7 +21,7 @@ export const variableItemsV3: PlaydeckVariableItem[] = [
 		deprecated: '4.1b11',
 	},
 	{
-		getVariableDefinition: (): CompanionVariableDefinition => {
+		getVariableDefinition: (): CompanionVariableDefinitionLegacy => {
 			return {
 				variableId: `general_active_channels`,
 				name: `Number of active channels`,
@@ -35,7 +36,7 @@ export const variableItemsV3: PlaydeckVariableItem[] = [
 		deprecated: '4.1b11',
 	},
 	{
-		getVariableDefinition: (): CompanionVariableDefinition => {
+		getVariableDefinition: (): CompanionVariableDefinitionLegacy => {
 			return {
 				variableId: `general_production_mode`,
 				name: `Production Mode state`,
@@ -50,7 +51,7 @@ export const variableItemsV3: PlaydeckVariableItem[] = [
 		deprecated: '4.1b11',
 	},
 	{
-		getVariableDefinition: (): CompanionVariableDefinition => {
+		getVariableDefinition: (): CompanionVariableDefinitionLegacy => {
 			return {
 				variableId: `general_recording`,
 				name: `Recording state`,
@@ -65,7 +66,7 @@ export const variableItemsV3: PlaydeckVariableItem[] = [
 		deprecated: '4.1b11',
 	},
 	{
-		getVariableDefinition: (): CompanionVariableDefinition => {
+		getVariableDefinition: (): CompanionVariableDefinitionLegacy => {
 			return {
 				variableId: `general_recording_duration`,
 				name: `Recording duration in seconds`,
@@ -80,7 +81,7 @@ export const variableItemsV3: PlaydeckVariableItem[] = [
 		deprecated: '4.1b11',
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_playing_state`,
@@ -106,7 +107,7 @@ export const variableItemsV3: PlaydeckVariableItem[] = [
 		deprecated: '4.1b11',
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_block_id`,
@@ -122,7 +123,7 @@ export const variableItemsV3: PlaydeckVariableItem[] = [
 		deprecated: '4.1b11',
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_block_name`,
@@ -138,7 +139,7 @@ export const variableItemsV3: PlaydeckVariableItem[] = [
 		deprecated: '4.1b11',
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_block_time_end`,
@@ -154,7 +155,7 @@ export const variableItemsV3: PlaydeckVariableItem[] = [
 		deprecated: '4.1b11',
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_clip_id`,
@@ -170,7 +171,7 @@ export const variableItemsV3: PlaydeckVariableItem[] = [
 		deprecated: '4.1b11',
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_clip_type`,
@@ -186,7 +187,7 @@ export const variableItemsV3: PlaydeckVariableItem[] = [
 		deprecated: '4.1b11',
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_clip_name`,
@@ -202,7 +203,7 @@ export const variableItemsV3: PlaydeckVariableItem[] = [
 		deprecated: '4.1b11',
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_clip_progress`,
@@ -218,7 +219,7 @@ export const variableItemsV3: PlaydeckVariableItem[] = [
 		deprecated: '4.1b11',
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_clip_duration`,
@@ -234,7 +235,7 @@ export const variableItemsV3: PlaydeckVariableItem[] = [
 		deprecated: '4.1b11',
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_clip_remaining`,
@@ -250,7 +251,7 @@ export const variableItemsV3: PlaydeckVariableItem[] = [
 		deprecated: '4.1b11',
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_clip_position`,
@@ -266,7 +267,7 @@ export const variableItemsV3: PlaydeckVariableItem[] = [
 		deprecated: '4.1b11',
 	},
 	{
-		getVariableDefinition: (channel?: number): CompanionVariableDefinition | null => {
+		getVariableDefinition: (channel?: number): CompanionVariableDefinitionLegacy | null => {
 			if (channel === undefined) return null
 			return {
 				variableId: `channel_${channel + 1}_clip_time_end`,

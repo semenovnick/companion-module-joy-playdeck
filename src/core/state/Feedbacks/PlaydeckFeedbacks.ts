@@ -1,4 +1,4 @@
-import { CompanionFeedbackDefinitions } from '@companion-module/base/dist'
+import { CompanionFeedbackDefinitions } from '@companion-module/base'
 
 import { PlaydeckInstance } from '../../../index.js'
 

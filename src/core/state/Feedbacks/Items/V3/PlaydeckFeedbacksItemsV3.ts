@@ -2,7 +2,6 @@ import {
 	combineRgb,
 	CompanionFeedbackDefinitions,
 	CompanionOptionValues,
-	InputValue,
 	SomeCompanionFeedbackInputField,
 } from '@companion-module/base'
 import { PlaydeckState } from '../../../../../core/state/PlaydeckState.js'
@@ -46,7 +45,7 @@ export const PlaydeckFeedbacksDefinitionsV3 = (state: PlaydeckStateV3): Companio
 				utils.checkState.textInput('Clip'),
 			],
 
-			callback: async (feedback, context): Promise<boolean> => {
+			callback: async (feedback): Promise<boolean> => {
 				if (!state) return false
 
 				const options = feedback.options as CheckStateOptionValues
@@ -55,8 +54,8 @@ export const PlaydeckFeedbacksDefinitionsV3 = (state: PlaydeckStateV3): Companio
 				let isBlock = false
 				const fState = options.state
 				const fChannel = options.playlist
-				const fClip = await context.parseVariablesInString(options.clip.toString())
-				const fBlock = await context.parseVariablesInString(options.block.toString())
+				const fClip = options.clip.toString()
+				const fBlock = options.block.toString()
 				const isName = isNaN(Number(fClip)) || isNaN(Number(fBlock))
 				const isAnyClip = Number(fClip) === 0
 				const isAnyBlock = Number(fBlock) === 0
@@ -133,7 +132,7 @@ const utils = {
 				label: `${source} Number/Name (0 for any)`,
 				id: `${source.toLowerCase()}`,
 				default: `0`,
-				useVariables: { local: true },
+				useVariables: true,
 			}
 		},
 	},
@@ -142,8 +141,8 @@ const utils = {
 interface CheckStateOptionValues extends CompanionOptionValues {
 	playlist: number
 	state: PlaybackState
-	block: InputValue
-	clip: InputValue
+	block: string | number
+	clip: string | number
 }
 export interface PlaydeckStateV3 extends Omit<PlaydeckState, 'status'> {
 	status: Omit<PlaydeckState['status'], 'getValues'> & {

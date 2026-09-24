@@ -1,9 +1,9 @@
 import {
-	CompanionVariableDefinition,
+	CompanionVariableDefinitions,
 	CompanionVariableValue,
 	CompanionVariableValues,
 	LogLevel,
-} from '@companion-module/base/dist'
+} from '@companion-module/base'
 import { PlaydeckInstance } from '../../../index.js'
 import { PlaydeckStatusValues } from '../../../core/data/PlaydeckStatus.js'
 import { PlaydeckVariableItem, variableItems } from './Items/PlaydeckVariableItems.js'
@@ -12,7 +12,7 @@ import { PlaydeckEvent } from '../../../core/data/PlaydeckEvents.js'
 import { PlaydeckData } from '../../../core/data/PlaydeckData.js'
 export class PlaydeckVariables {
 	#variables: PlaydeckVariable[] = []
-	#variableDifinitions: Set<CompanionVariableDefinition> = new Set()
+	#variableDifinitions: Set<CompanionVariableDefinitionLegacy> = new Set()
 	#variableValues: CompanionVariableValues = {}
 	#instance: PlaydeckInstance
 	constructor(instance: PlaydeckInstance) {
@@ -21,7 +21,7 @@ export class PlaydeckVariables {
 		this.#initVariables(variableItems)
 	}
 	#initVariables(variableItems: PlaydeckVariableItem[]): void {
-		this.#instance.setVariableDefinitions([])
+		this.#instance.setVariableDefinitions({})
 		variableItems.forEach((variableItem: PlaydeckVariableItem) => {
 			if (this.#isDeprecated(variableItem)) return
 			const newVar = this.#covertToVariable(variableItem) // need shallow copy because we change `channel` field
@@ -137,15 +137,18 @@ export class PlaydeckVariables {
 			if (this.#variableDifinitions.has(variable.variableDefinition)) {
 				this.#log('warn', `Deleting ${variable.variableDefinition.variableId}: ${variable.value}`)
 				this.#variableDifinitions.delete(variable.variableDefinition)
-				this.#instance?.setVariableDefinitions(Array.from(this.#variableDifinitions))
+				this.#instance?.setVariableDefinitions(this.#convertLegacyVariableDefinitions())
 			}
 			return
 		}
 		this.#variableValues[variable.variableDefinition.variableId] = variable.value
 		if (!this.#variableDifinitions.has(variable.variableDefinition)) {
 			this.#variableDifinitions.add(variable.variableDefinition)
-			this.#instance?.setVariableDefinitions(Array.from(this.#variableDifinitions))
+			this.#instance?.setVariableDefinitions(this.#convertLegacyVariableDefinitions())
 		}
+	}
+	#convertLegacyVariableDefinitions(): CompanionVariableDefinitions {
+		return Object.fromEntries([...this.#variableDifinitions].map(({ variableId, name }) => [variableId, { name }]))
 	}
 	#log(level: LogLevel, message: string) {
 		this.#instance?.log(level, `Playdeck Variables: ${message}`)
@@ -153,6 +156,8 @@ export class PlaydeckVariables {
 }
 
 export interface PlaydeckVariable extends PlaydeckVariableItem {
-	variableDefinition: CompanionVariableDefinition | null
+	variableDefinition: CompanionVariableDefinitionLegacy | null
 	value: CompanionVariableValue | undefined
 }
+
+export type CompanionVariableDefinitionLegacy = { variableId: string; name: string }

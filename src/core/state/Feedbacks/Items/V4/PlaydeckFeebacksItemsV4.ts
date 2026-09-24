@@ -1,4 +1,4 @@
-import { combineRgb, CompanionFeedbackDefinitions, CompanionOptionValues, InputValue } from '@companion-module/base'
+import { combineRgb, CompanionFeedbackDefinitions, CompanionOptionValues } from '@companion-module/base'
 import { PlaydeckState } from '../../../../../core/state/PlaydeckState.js'
 import { PlaybackState } from '../../../../../utils/PlaydeckUtils.js'
 import { PlaydeckValuesV4 } from '../../../../data/PlaydeckStatusManager/Versions/V4/v40b00/PlaydeckStatusV4.js'
@@ -39,7 +39,7 @@ export const PlaydeckFeedbacksDefinitionsV4 = (state: PlaydeckStateV4): Companio
 					label: 'Use variables for Channel',
 					id: 'isChanString',
 					default: false,
-					isVisible: (opt) => opt.isUID === false,
+					isVisibleExpression: `$(options:isUID)=== false`,
 				},
 				{
 					type: 'number',
@@ -48,15 +48,15 @@ export const PlaydeckFeedbacksDefinitionsV4 = (state: PlaydeckStateV4): Companio
 					min: 1,
 					max: 8,
 					default: 1,
-					isVisible: (opt) => opt.isChanString === false && opt.isUID === false,
+					isVisibleExpression: `($(options:isChanString)=== false)&&($(options:isUID)=== false)`,
 				},
 				{
 					type: 'textinput',
 					label: `Channel`,
 					id: `channelString`,
 					default: `0`,
-					useVariables: { local: true },
-					isVisible: (opt) => opt.isChanString === true && opt.isUID === false,
+					useVariables: true,
+					isVisibleExpression: `($(options:isChanString)=== true)&&($(options:isUID)=== false)`,
 				},
 
 				{
@@ -64,16 +64,16 @@ export const PlaydeckFeedbacksDefinitionsV4 = (state: PlaydeckStateV4): Companio
 					label: `Block Number/Name`,
 					id: `block`,
 					default: ``,
-					useVariables: { local: true },
-					isVisible: (opt) => opt.isUID === false,
+					useVariables: true,
+					isVisibleExpression: `$(options:isUID)=== false`,
 				},
 				{
 					type: 'textinput',
 					label: `Clip Number/Name (0 for any)`,
 					id: `clip`,
 					default: `0`,
-					useVariables: { local: true },
-					isVisible: (opt) => opt.isUID === false,
+					useVariables: true,
+					isVisibleExpression: `$(options:isUID)=== false`,
 				},
 
 				{
@@ -81,12 +81,12 @@ export const PlaydeckFeedbacksDefinitionsV4 = (state: PlaydeckStateV4): Companio
 					label: `Item UID (0 for any)`,
 					id: `item`,
 					default: `0`,
-					useVariables: { local: true },
-					isVisible: (opt) => opt.isUID === true,
+					useVariables: true,
+					isVisibleExpression: `$(options:isUID)=== trues`,
 				},
 			],
 
-			callback: async (feedback, context): Promise<boolean> => {
+			callback: async (feedback): Promise<boolean> => {
 				if (!state) return false
 
 				const options = feedback.options as CheckStateOptionValues
@@ -94,12 +94,10 @@ export const PlaydeckFeedbacksDefinitionsV4 = (state: PlaydeckStateV4): Companio
 				let isClip = false
 				let isBlock = false
 				const fState = options.state
-				const fChannel = options.isChanString
-					? await context.parseVariablesInString(options.channelString.toString())
-					: options.channelNum
-				const fClip = await context.parseVariablesInString(options.clip.toString())
-				const fBlock = await context.parseVariablesInString(options.block.toString())
-				const fItem = Number(await context.parseVariablesInString(options.item.toString()))
+				const fChannel = options.isChanString ? options.channelString.toString() : options.channelNum
+				const fClip = options.clip.toString()
+				const fBlock = options.block.toString()
+				const fItem = options.item.toString()
 				const isAnyClip = Number(fClip) === 0
 				const isAnyBlock = Number(fBlock) === 0
 				const isAny = isAnyClip && isAnyBlock
@@ -208,10 +206,10 @@ export const PlaydeckFeedbacksDefinitionsV4 = (state: PlaydeckStateV4): Companio
 export interface CheckStateOptionValues extends CompanionOptionValues {
 	isChanString: boolean
 	channelNum: number
-	channelString: InputValue
+	channelString: string | number
 	state: PlaybackState | Events
-	block: InputValue
-	clip: InputValue
+	block: string | number
+	clip: string | number
 	item: number
 	isUID: boolean
 }
